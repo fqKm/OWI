@@ -96,6 +96,9 @@
             align-items: center;
             cursor: pointer;
         }
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -104,15 +107,70 @@
         <input type="text" class="search-bar" placeholder="Cari Postingan">
         <div class="profile-icon">👤</div>
     </div>
-    <div class="container">
-        <div class="card">
-            <img src="image.jpg" alt="Sample Image">
-            <div class="info">
-                <h3>Title</h3>
-                <p>Description</p>
-                <div class="arrow">➡️</div>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="d-flex justify-content-between mb-4">
+                    <button class="btn btn-primary" onclick="showSection('news')">News Feed</button>
+                    <button class="btn btn-secondary" onclick="showSection('marketplace')">Marketplace</button>
+                </div>
+
+                <!-- News Feed Section -->
+                <div id="news-section">
+                    <h2 class="text-center">News Feed</h2>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">John Doe</h5>
+                            <p class="card-text">This is my first post!</p>
+                            <img src="image1.jpg" class="img-fluid" alt="Post image">
+                            <p class="text-muted">Posted on 2024-12-11</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Jane Smith</h5>
+                            <p class="card-text">Loving this platform!</p>
+                            <img src="image2.jpg" class="img-fluid" alt="Post image">
+                            <p class="text-muted">Posted on 2024-12-10</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Marketplace Section -->
+                <div id="marketplace-section" class="hidden">
+                    <h2 class="text-center">Marketplace</h2>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Item 1</h5>
+                            <p class="card-text">Description for item 1. Price: $100</p>
+                            <img src="marketplace1.jpg" class="img-fluid" alt="Item image">
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Item 2</h5>
+                            <p class="card-text">Description for item 2. Price: $200</p>
+                            <img src="marketplace2.jpg" class="img-fluid" alt="Item image">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function showSection(section) {
+            document.getElementById('news-section').classList.add('hidden');
+            document.getElementById('marketplace-section').classList.add('hidden');
+
+            if (section === 'news') {
+                document.getElementById('news-section').classList.remove('hidden');
+            } else if (section === 'marketplace') {
+                document.getElementById('marketplace-section').classList.remove('hidden');
+            }
+        }
+    </script>
 </body>
 </html>
