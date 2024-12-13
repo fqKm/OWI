@@ -107,71 +107,21 @@
 <div class="container">
     <?php
         require 'koneksi.php';
-        $NIK = $_GET['nik'];
-        $hasil= mysqli_query($conn,"SELECT * FROM user WHERE nim=$NIK");
-       
-        while ($data = mysqli_fetch_array($hasil)) {
-            $nim = $data['nim'];
-            $namaDepan = $data['nama_depan'];
-            $namaBelakang = $data['nama_Belakang'];
-            $email = $data['email'];
-            $nomorHP = $data['nomor_telepon'];
-            $alamat = $data['id_alamat'];
-        }
-        require 'koneksi.php';
-
-        $NIK = $_GET['nik']; // Get NIK from the request
-
-        // SQL query to fetch data from `user` and the related data from `alamat`
-        $query = "
-            SELECT 
-                user.nim, 
-                user.nama_depan, 
-                user.nama_belakang, 
-                user.email, 
-                user.nomor_telepon, 
-                alamat.jalan, 
-                alamat.kota, 
-                alamat.provinsi, 
-                alamat.kode_pos
-            FROM 
-                user
-            LEFT JOIN 
-                alamat 
-            ON 
-                user.id_alamat = alamat.id
-            WHERE 
-                user.nim = '$NIK'
-        ";
-
-        $result = mysqli_query($conn, $query);
-
-        if ($data = mysqli_fetch_array($result)) {
-            // Fetch user details
-            $nim = $data['nim'];
-            $namaDepan = $data['nama_depan'];
-            $namaBelakang = $data['nama_belakang'];
-            $email = $data['email'];
-            $nomorHP = $data['nomor_telepon'];
-
-            // Fetch related address details
-            $jalan = $data['jalan'];
-            $kota = $data['kota'];
-            $provinsi = $data['provinsi'];
-            $kodePos = $data['kode_pos'];
-
+        $NIK = 101;
+        $hasil= mysqli_query($conn,"SELECT * FROM user LEFT JOIN alamat ON user.id_alamat= alamat.id WHERE user.nik=$NIK");
+        $data = mysqli_fetch_assoc($hasil);
     ?>
     <div class="profile-container">
         <img src="https://i.imgur.com/xO14F5q.png" alt="Profile Image">
-        <h3>John Doe</h3>
+        <h3><?php echo $data['nama_depan']." ".$data['nama_belakang']?></h3>
         <p>Bay Area, San Francisco, CA</p>
     </div>
     <div class="info-container">
-        <p><span class="label">NIK</span> 177013</p>
-        <p><span class="label">First Name</span> John </p>
-        <p><span class="label">Last Name</span> Doe</p>
-        <p><span class="label">Email</span> john.doe@example.com</p>
-        <p><span class="label">Nomor Telepon</span> 085313588532</p>
+        <p><span class="label">NIK</span><?php echo $data['nik']?></p>
+        <p><span class="label">First Name</span> <?php echo $data['nama_depan']?> </p>
+        <p><span class="label">Last Name</span> <?php echo $data['nama_belakang']?></p>
+        <p><span class="label">Email</span> <?php echo $data['email']?></p>
+        <p><span class="label">Nomor Telepon</span> <?php echo $data['nomor_telepon']?></p>
     </div>
     <a href="updateprofile.php" class="edit-btn">Edit Profile</a>
 </div>
