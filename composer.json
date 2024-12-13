@@ -2,11 +2,12 @@
     "name": "fadlan/owi",
     "require": {
         "vlucas/phpdotenv": "^5.6",
-      "ext-pdo": "*"
+      "ext-pdo": "*",
+      "ext-mysqli": "*"
     },
     "autoload": {
         "psr-4": {
-            "Fadlan\\Owi\\": "src/"
+            "Owi\\": "src/"
         }
     },
     "authors": [

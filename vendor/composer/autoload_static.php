@@ -23,13 +23,13 @@ class ComposerStaticInitff3e216fb55ecdbe3f492065d403d063
         array (
             'PhpOption\\' => 10,
         ),
+        'O' => 
+        array (
+            'Owi\\' => 4,
+        ),
         'G' => 
         array (
             'GrahamCampbell\\ResultType\\' => 26,
-        ),
-        'F' => 
-        array (
-            'Fadlan\\Owi\\' => 11,
         ),
         'D' => 
         array (
@@ -54,13 +54,13 @@ class ComposerStaticInitff3e216fb55ecdbe3f492065d403d063
         array (
             0 => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption',
         ),
+        'Owi\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src',
+        ),
         'GrahamCampbell\\ResultType\\' => 
         array (
             0 => __DIR__ . '/..' . '/graham-campbell/result-type/src',
-        ),
-        'Fadlan\\Owi\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/src',
         ),
         'Dotenv\\' => 
         array (
