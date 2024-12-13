@@ -113,8 +113,9 @@
     ?>
     <div class="profile-container">
         <img src="https://i.imgur.com/xO14F5q.png" alt="Profile Image">
-        <h3><?php echo $data['nama_depan']." ".$data['nama_belakang']?></h3>
-        <p>Bay Area, San Francisco, CA</p>
+        <h3><?php echo htmlspecialchars($data['nama_depan'] . " " . $data['nama_belakang']); ?></h3>
+        <p><?php echo "RT " . htmlspecialchars($data['rt']) . ", RW " . htmlspecialchars($data['rw']) . ", Jl. " . htmlspecialchars($data['jalan']) . ", Dusun " . htmlspecialchars($data['dusun']) . ", Desa " . htmlspecialchars($data['desa']) . ", Kecamatan " . htmlspecialchars($data['kecamatan']) . ", Kota " . htmlspecialchars($data['kota']); ?></p>
+
     </div>
     <div class="info-container">
         <p><span class="label">NIK</span><?php echo $data['nik']?></p>
@@ -122,6 +123,7 @@
         <p><span class="label">Last Name</span> <?php echo $data['nama_belakang']?></p>
         <p><span class="label">Email</span> <?php echo $data['email']?></p>
         <p><span class="label">Nomor Telepon</span> <?php echo $data['nomor_telepon']?></p>
+
     </div>
     <a href="updateprofile.php" class="edit-btn">Edit Profile</a>
 </div>
