@@ -20,7 +20,7 @@ $postPermintaan = $requestPostService->getPostByHighestUpvote();
             <img src="<?php echo $penawaran['foto']?>" class="card-img-top" alt="Post Image">
             <div class="card-body">
                 <h5 class="card-title"> <?php echo $penawaran['judul']?></h5>
-                <p class="card-text"><small class="text-body-secondary">Created by : <?php echo $penawaran['nama_depan'].$penawaran['nama_belakang'] ?></small></p>
+                <p class="card-text"><small class="text-body-secondary">Created by : <?php echo $penawaran['nama_depan']." ".$penawaran['nama_belakang'] ?></small></p>
                 <p class="card-text"><small class="text-body-secondary">Created at : <?php echo $penawaran['dibuat_pada']?></small></p>
             </div>
         </div>
@@ -42,7 +42,7 @@ $postPermintaan = $requestPostService->getPostByHighestUpvote();
                 <img src="<?php echo $permintaan['foto']?>" class="card-img-top" alt="Post Image">
                 <div class="card-body">
                     <h5 class="card-title"> <?php echo $permintaan['judul']?></h5>
-                    <p class="card-text"><small class="text-body-secondary">Requested by : <?php echo $permintaan['nama']?></small></p>
+                    <p class="card-text"><small class="text-body-secondary">Requested by : <?php echo $permintaan['organisasi']?></small></p>
                     <p class="card-text"><small class="text-body-secondary">Created at : <?php echo $permintaan['dibuat_pada']?></small></p>
                 </div>
             </div>

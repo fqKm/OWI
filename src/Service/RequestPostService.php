@@ -12,7 +12,7 @@ class RequestPostService
     }
     public function getPostByHighestUpvote(): array
     {
-        $query = "SELECT id, judul, foto, dibuat_pada, nik_pembuat FROM permintaan_donasi ORDER BY dibuat_pada DESC LIMIT 5";
+        $query = "SELECT permintaan_donasi.id, permintaan_donasi.judul, permintaan_donasi.foto, permintaan_donasi.dibuat_pada, permintaan_donasi.nik_pembuat, user.organisasi FROM permintaan_donasi JOIN user ON permintaan_donasi.nik_pembuat = user.nik ORDER BY dibuat_pada DESC LIMIT 5";
         $statement = $this->db->prepare($query);
         $statement->execute();
         $result = $statement->get_result();
@@ -57,7 +57,7 @@ class RequestPostService
         $query = "INSERT INTO permintaan_donasi (judul, deskripsi, dibuat_pada, id_alamat, nik_pembuat, foto) VALUES (?,?,?,?,?,?)";
         $now = date("Y-m-d H:i:s");
         $statement = $this->db->prepare($query);
-        $statement->bind_param("sssiiis", $judul, $deskripsi, $now, $id_alamat,$nik_pembuat, $foto);
+        $statement->bind_param("sssiis", $judul, $deskripsi, $now, $id_alamat,$nik_pembuat, $foto);
         if ($statement->execute()) {
             return $statement->insert_id;
         }
