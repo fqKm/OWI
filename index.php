@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Index</title>
-  <link rel="stylesheet" href="../../bootstrap/css/bootstrap.css">
+  <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
 </head>
 <body>
 <nav class="navbar navbar-dark" style="background-color: #C6E385">
@@ -12,8 +12,8 @@
   </div>
   <div>
     <a href="aboutus.php" class="text-light m-1">Our Story</a>
-    <a href="login.php" class="text-light m-1">Login</a>
-    <a href="register.php" class="bg-light p-2 rounded font-weight-bold" style="color: #C6E385"> Get Started </a>
+    <a href="/src/View/login.php" class="text-light m-1">Login</a>
+    <a href="/src/View/register.php" class="bg-light p-2 rounded font-weight-bold" style="color: #C6E385"> Get Started </a>
   </div>
 </nav>
 <div class="card bg-dark text-white">

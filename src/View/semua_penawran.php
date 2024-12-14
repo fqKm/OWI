@@ -1,9 +1,9 @@
 <?php
 $page = null;
-if(isset($page)){
+if(isset($_GET['page'])){
     $page = $_GET['page'];
 }
-require "../Service/OfferPostService.php";
+require_once "../Service/OfferPostService.php";
 $offerPostService = new OfferPostService();
 $postPenawaran = $offerPostService->getAllOfferPost($page)?>
 <html>
@@ -11,7 +11,7 @@ $postPenawaran = $offerPostService->getAllOfferPost($page)?>
     <title>
         Semua Penawaran
     </title>
-    <link href="../../bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
 </head>
 <body>
 <div class="container mt-3 border-dark">

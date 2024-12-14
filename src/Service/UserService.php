@@ -1,6 +1,6 @@
 <?php
 require_once "../Model/Database.php";
-require "AddressService.php";
+require_once "AddressService.php";
 class UserService {
     private $db;
     private $addressService;
@@ -43,6 +43,43 @@ class UserService {
             return $statement->execute();
         }
         return false;
+    }
+    public function getUserByNik($nik): ?array{
+        $query = "SELECT nik, nama_depan, nama_belakang, email, password, nomor_telepon, id_alamat FROM user WHERE nik = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param('i', $nik);
+        $statement->execute();
+        $result = $statement->get_result();
+        if ($result->num_rows > 0) {
+            return $result->fetch_assoc();
+        }
+        return null;
+    }
+
+    public function getUserAddressByNik($nik): ?array
+    {
+        $query = "SELECT id_alamat FROM user WHERE nik = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param('i', $nik);
+        $statement->execute();
+        $result = $statement->get_result();
+        if (!empty($result)) {
+            return $result->fetch_assoc();
+        }
+        return null;
+    }
+
+    public function getUserOrganisationByNik($nik): array
+    {
+        $query = "SELECT organisasi FROM user WHERE nik = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param('i', $nik);
+        $statement->execute();
+        $result = $statement->get_result();
+        if (!empty($result)) {
+            return $result->fetch_assoc();
+        }
+        return [];
     }
 }
 ?>

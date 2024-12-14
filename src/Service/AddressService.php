@@ -17,5 +17,15 @@ class AddressService
         }
         return null;
     }
-
+    public function getAddressById(int $id) : ?array{
+        $query = "SELECT * FROM alamat WHERE id = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param("i", $id);
+        $statement->execute();
+        $result = $statement->get_result();
+        if(!empty($result)){
+            return $result->fetch_assoc();
+        }
+        return null;
+    }
 }

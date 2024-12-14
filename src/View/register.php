@@ -1,14 +1,14 @@
 <?php
-require "../Service/UserService.php";
+require_once "../Service/UserService.php";
 $userService = new UserService();
+$error = null;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Proses data POST
     $nik = $_POST["NIK"] ?? null;
     $email = $_POST['Email'] ?? null;
     $password = $_POST["Password"] ?? null;
-    $nama_depan = $_POST["Nama Depan"] ?? null;
-    $nama_belakang = $_POST["Nama Belakang"] ?? '';
-    $nomor_telepon = $_POST["Nomor Telephone"] ?? null;
+    $nama_depan = $_POST["NamaDepan"] ?? null;
+    $nama_belakang = $_POST["NamaBelakang"] ?? '';
+    $nomor_telepon = $_POST["NomorTelephone"] ?? null;
     $rt = $_POST["RT"] ?? '';
     $rw = $_POST["RW"] ?? '';
     $jalan = $_POST["Jalan"] ?? '';
@@ -16,25 +16,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $desa = $_POST["Desa"] ?? '';
     $kecamatan = $_POST["Kecamatan"] ?? '';
     $kota = $_POST["Kota"] ?? '';
+    $result = $userService->registerService($nik, $nama_depan, $nama_belakang, $email, $password, $nomor_telepon, $rt, $rw, $jalan, $dusun, $desa,$kecamatan,$kota);
+    if($result){
+        session_start();
+        $_SESSION['nik'] = $nik;
+        header("Location: home.php");
+        exit();
+    } else {
+        $error = "Gagal Register, Tolong Ulangi Kembali";
+    }
 } else {
     $nik = $email = $password = $nama_depan = $nama_belakang = $nomor_telepon = $rt = $rw = $jalan = $dusun = $desa = $kecamatan = $kota = '';
-}
-
-
-$result = $userService->registerService($nik,$nama_depan,$nama_belakang, $email, $password, $nomor_telepon, $rt, $rw, $jalan, $dusun, $desa,$kecamatan,$kota);
-if($result){
-    session_start();
-    $_SESSION['nik'] = $nik;
-    header("Location: home.php");
-    exit();
-} else {
-    $error = "Gagal Register, Tolong Ulangi Kembali";
 }
 ?>
 <html>
 <head>
 <title>Regitser</title>
-    <link rel="stylesheet" href="../../bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
 </head>
 <body>
 <div class="container">
@@ -60,19 +58,23 @@ if($result){
             </div>
             <div class="col-md-6">
                 <label for="Nama Depan" class="form-label">Nama</label>
-                <input type="text" class="form-control" name="Nama Depan">
+                <input type="text" class="form-control" name="NamaDepan">
             </div>
             <div class="col-md-6">
-                <label for="Nama Belakang" class="form-label">Nama Belakang</label>
-                <input type="text" class="form-control" name="Nama Belakang">
+                <label for="NamaBelakang" class="form-label">Nama Belakang</label>
+                <input type="text" class="form-control" name="NamaBelakang">
             </div>
             <div class="col-md-12">
                 <label for="Nomor Telephone" class="form-label">Nomor Telephone</label>
-                <input type="text" class="form-control" name="Nomor Telephone">
+                <input type="text" class="form-control" name="NomorTelephone">
             </div>
-            <div class="col-12">
+            <div class="col-6">
                 <label for="Jalan" class="form-label">Address</label>
                 <input type="text" class="form-control" name="Jalan" placeholder="1234 Main St">
+            </div>
+            <div class="col-6">
+                <label for="Dusun" class="form-label">Dusun</label>
+                <input type="text" class="form-control" name="Dusun">
             </div>
             <div class="col-md-6">
                 <label for="RT" class="form-label">RT</label>
@@ -98,9 +100,11 @@ if($result){
                 <label for="Provinsi" class="form-label">Provinsi</label>
                 <input type="text" class="form-control" id="Provinsi">
             </div>
-            <a href="login.php" class="mt-3 col-md-6 text-center"> I Already Has An Account</a>
-            <div class="col-md-6 mt-3">
-                <button type="submit" class="btn btn-primary w-100">SignUp</button>
+            <div class="col-md-12 text-center mt-3">
+                <a href="login.php" class="mt-3 col-md-6 text-center"> I Already Has An Account</a>
+            </div>
+            <div class="col-md-12 text-center mt-3">
+                <button type="submit" class="btn btn-primary col-md-6">SignUp</button>
             </div>
         </form>
     </div>

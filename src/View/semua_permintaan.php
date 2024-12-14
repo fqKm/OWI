@@ -1,9 +1,9 @@
 <?php
 $page = null;
-if(isset($page)){
+if(isset($_GET['page'])){
     $page = $_GET['page'];
 }
-require "../Service/RequestPostService.php";
+require_once "../Service/RequestPostService.php";
 $offerPostService = new RequestPostService();
 $postPermintaan = $offerPostService->getAllRequestPost($page)?>
 <html>
@@ -11,7 +11,7 @@ $postPermintaan = $offerPostService->getAllRequestPost($page)?>
     <title>
         Semua Permintaan
     </title>
-    <link href="../../bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
 </head>
 <body>
 <div class="container mt-3 border-dark">
