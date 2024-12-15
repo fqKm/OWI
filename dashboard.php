@@ -105,7 +105,7 @@
     <div class="header">
         <h1>OWI</h1>
         <input type="text" class="search-bar" placeholder="Cari Postingan">
-        <div class="profile-icon">👤</div>
+        <div class="profile-icon" onclick="location.href='profile.php'">👤</div>
     </div>
     <div class="container mt-5">
         <div class="row">
