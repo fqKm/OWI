@@ -76,37 +76,13 @@
         .card.info .arrow:hover {
             color: #007bff;
         }
-
-        .search-bar {
-            width: 100%;
-            max-width: 400px;
-            padding: 0.5rem;
-            border: 1px solid #ccc;
-            border-radius: 0.5rem;
-            margin-right: 1rem;
-        }
-
-        .profile-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: #ccc;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-        }
         .hidden {
             display: none;
         }
     </style>
+    <?php include 'header.php'; ?>
 </head>
 <body>
-    <div class="header">
-        <h1>OWI</h1>
-        <input type="text" class="search-bar" placeholder="Cari Postingan">
-        <div class="profile-icon" onclick="location.href='profile.php'">👤</div>
-    </div>
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-8 offset-md-2">
