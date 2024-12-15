@@ -18,6 +18,7 @@
                 <a class="nav-item nav-link active" href="dashboard.php">Home <span class="sr-only">(current)</span></a>
                 <a class="nav-item nav-link" href="#">Postingan</a>
                 <a class="nav-item nav-link" href="profile.php">Profile</a>
+                <a class="nav-item nav-link" href="logout.php">Logout</a>
             </div>
     </nav>
 </body>
