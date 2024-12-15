@@ -9,7 +9,7 @@
 </head>
 <body>
     <nav class="navbar sticky-top navbar navbar-expand-lg navbar-light" style="background-color: #A0CB44">
-        <a class="navbar-brand" href="#">OWI</a>
+        <a class="navbar-brand" href="index.php">OWI</a>
         <button class="navbar-toggler" type="button-s" data-toggle="collapse" data-target="#navbarAltMarkup" aria-controls="navbarAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>

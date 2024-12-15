@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
-    <title> Update Profile</title>
+    <title>Profile</title>
 </head>
 <body>
 <?php include 'header.php'; ?>
