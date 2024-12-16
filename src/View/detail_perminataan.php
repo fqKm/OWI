@@ -10,6 +10,7 @@ $detail_post_permintaan = $requestService->getRequestPostDetailsById((int)$_GET[
 $detail_user = $userService->getUserByNik($detail_post_permintaan["nik_pembuat"]);
 $detail_alamat = $addressService->getAddressById($detail_post_permintaan["id_alamat"]);;
 $alamat = "RT/RW : ".$detail_alamat['rt']."/ ".$detail_alamat['rw'].", ".$detail_alamat['dusun'].", ".$detail_alamat['desa'].", ".$detail_alamat['kecamatan'].", ".$detail_alamat['kota'].", ".$detail_alamat['kode_pos'];
+$postPermintaan = $requestService->getRequestPostDetailsById((int)$_GET["id"]);
 ?>
 
 <html>
@@ -37,6 +38,11 @@ $alamat = "RT/RW : ".$detail_alamat['rt']."/ ".$detail_alamat['rw'].", ".$detail
         <div class="card-footer text-muted">
             <?php echo $detail_post_permintaan['dibuat_pada']?>
         </div>
+    </div>
+    <div class="text-center mt-4">
+        <a href="transaksi_donasi.php?id_posting=<?php echo (Int)$postPermintaan['id']; ?>&nik_penerima=<?php echo (Int)$postPermintaan['nik_pembuat'];?>" class="btn btn-primary">
+            Lanjutkan ke Transaksi
+        </a>
     </div>
 </div>
 </body>
