@@ -21,7 +21,7 @@ try {
         $nik_penerima = $_GET["nik_penerima"];
         $alamat = $userService->getUserAddressByNik($nik_donatur);
         $no_resi = str_pad(rand(1000000000000000, 9999999999999999), 16, "0", STR_PAD_LEFT);
-        $tipe_transaksi = "permintaan";
+        $tipe_transaksi = "donasi";
         if (!isset($_FILES["file"]) || $_FILES["file"]["error"] != UPLOAD_ERR_OK) {
             throw new Exception("Gagal mengupload foto. Silakan coba lagi.");
         }
@@ -34,10 +34,10 @@ try {
         $jumlah = $_POST["jumlah"] ?? [];
         $transaksi = $transactionServive->createTransaction($id_post, $nik_penerima, $nik_donatur, $no_resi, $tipe_transaksi);
         if ($transaksi === null) {
-            throw new Exception("Gagal membuat postingan. Silakan coba lagi.");
+            throw new Exception("Gagal menginput pakaian. Silakan coba lagi.");
         }
         if (!$transactionServive->createTransaction($id_post, $nik_penerima, $nik_donatur, $no_resi, $tipe_transaksi)) {
-            throw new Exception("Gagal memasukkan daftar pakaian. Silakan coba lagi.");
+            throw new Exception("Gagal menginput pakaian. Silakan coba lagi.");
         }
         header("Location: riwayat_transaksi.php");
         exit;

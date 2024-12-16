@@ -41,7 +41,7 @@ $postPermintaan = $requestService->getRequestPostDetailsById((int)$_GET["id"]);
     </div>
     <div class="text-center mt-4">
         <a href="transaksi_donasi.php?id_posting=<?php echo (Int)$postPermintaan['id']; ?>&nik_penerima=<?php echo (Int)$postPermintaan['nik_pembuat'];?>" class="btn btn-primary">
-            Lanjutkan ke Transaksi
+            Donasikan baju anda
         </a>
     </div>
 </div>
