@@ -3,16 +3,42 @@ require_once "../Service/OfferPostService.php";
 require_once "../Service/AddressService.php";
 require_once "../Service/UserService.php";
 require_once "../Service/ClothesService.php";
+require_once "../Service/TransactionService.php";
 
 $offerService = new OfferPostService();
 $clothesService = new ClothesService();
 $userService = new UserService();
 $addressService = new AddressService();
+$transactionServive = new TransactionService();
 $detail_post_penawaran = $offerService->getOfferPostDetailsById((int)$_GET["id"]);
 $detail_user = $userService->getUserByNik($detail_post_penawaran["nik_pembuat"]);
 $detail_alamat = $addressService->getAddressById($detail_post_penawaran["id_alamat"]);
 $detail_pakaian = $clothesService->getAllClothes((int)$_GET["id"]);
 $alamat = "RT/RW : ".$detail_alamat['rt']."/ ".$detail_alamat['rw'].", ".$detail_alamat['dusun'].", ".$detail_alamat['desa'].", ".$detail_alamat['kecamatan'].", ".$detail_alamat['kota'].", ".$detail_alamat['kode_pos'];
+try {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if (!isset($_SESSION['nik'])) {
+            throw new Exception("Anda belum login. Silakan login terlebih dahulu.");
+        }
+        $nik_penerima = $_SESSION['nik'];
+        $id_post = $detail_post_penawaran['id'];
+        $nik_donatur = $detail_post_penawaran["nik_pembuat"];
+        $alamat = $userService->getUserAddressByNik($nik_penerima);
+        $no_resi = str_pad(rand(1000000000000000, 9999999999999999), 16, "0", STR_PAD_LEFT);
+        $tipe_transaksi = "penerimaan";
+        $transaksi = $transactionServive->createTransaction($id_post, $nik_penerima, $nik_donatur, $no_resi, $tipe_transaksi);
+        if ($transaksi === null) {
+            throw new Exception("Gagal menginput pakaian. Silakan coba lagi.");
+        }
+        if (!$transactionServive->createTransaction($id_post, $nik_penerima, $nik_donatur, $no_resi, $tipe_transaksi)) {
+            throw new Exception("Gagal menginput pakaian. Silakan coba lagi.");
+        }
+        header("Location: riwayat_transaksi.php");
+        exit;
+    }
+}catch (Exception $e){
+    $error = $e->getMessage();
+}
 ?>
 <html>
 <head>
@@ -62,6 +88,13 @@ $alamat = "RT/RW : ".$detail_alamat['rt']."/ ".$detail_alamat['rw'].", ".$detail
         endforeach;?>
         </tbody>
     </table>
+    <!-- Form untuk mengirim transaksi -->
+    <form method="POST">
+        <div class="col-md-12 text-center mt-3">
+            <button type="submit" class="btn btn-primary col-md-6">Terima Penawaran Baju</button>
+        </div>
+    </form>
+    </div>
 </div>
 </body>
 </html>

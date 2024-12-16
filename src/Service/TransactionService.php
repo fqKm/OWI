@@ -20,21 +20,42 @@ class TransactionService
         return null;
     }
 
-    public function getAllTransaction(): ?array
+    public function getDonateTransaction(): ?array
     {
         $query = "SELECT 
         transaksi.id_transaksi,
         transaksi.id_postingan,
         transaksi.waktu_transaksi,
         transaksi.nomor_resi,
-        transaksi.tipe_transaksi,
-        user.nama_depan AS nama_donatur,
         user.nama_depan AS nama_penerima
         FROM transaksi
-        JOIN user ON transaksi.nik_donatur = user.nik";
-        
+        JOIN user ON transaksi.nik_penerima = user.nik
+        where nik_donatur = ?";
+
         $statement = $this->db->prepare($query);
-        $statement->bind_param("ii", $post_per_page, $offset);
+        $statement->bind_param("i", $nik);
+        $statement->execute();
+        $result = $statement->get_result();
+        if (!empty($result)) {
+            return $result->fetch_all(MYSQLI_ASSOC);
+        }
+        return null;
+    }
+
+    public function getRequestTransaction(): ?array
+    {
+        $query = "SELECT 
+        transaksi.id_transaksi,
+        transaksi.id_postingan,
+        transaksi.waktu_transaksi,
+        transaksi.nomor_resi,
+        user.nama_depan AS nama_donatur
+        FROM transaksi
+        JOIN user ON transaksi.nik_donatur = user.nik
+        where nik_penerima = ?";
+
+        $statement = $this->db->prepare($query);
+        $statement->bind_param("i", $nik);
         $statement->execute();
         $result = $statement->get_result();
         if (!empty($result)) {

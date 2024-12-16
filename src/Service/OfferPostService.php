@@ -20,7 +20,7 @@ class OfferPostService
     }
     public function getAllOfferPost(): ?array
     {
-        $query = "SELECT penawaran_donasi.id, penawaran_donasi.judul, penawaran_donasi.foto, penawaran_donasi.dibuat_pada, user.nama_depan, user.nama_belakang FROM penawaran_donasi JOIN user ON penawaran_donasi.nik_pembuat = user.nik";
+        $query = "SELECT penawaran_donasi.id, penawaran_donasi.judul, penawaran_donasi.foto, penawaran_donasi.dibuat_pada, penawaran_donasi.nik_pembuat, user.nama_depan, user.nama_belakang FROM penawaran_donasi JOIN user ON penawaran_donasi.nik_pembuat = user.nik";
         $statement = $this->db->prepare($query);
         $statement->execute();
         $result = $statement->get_result();
