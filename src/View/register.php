@@ -35,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
 </head>
 <body>
+<?php include "navbar.php" ?>
 <div class="container">
     <div class="d-flex justify-content-center">
         <h1 style="color: #C6E385" >Register</h1>

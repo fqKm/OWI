@@ -1,11 +1,7 @@
 <?php
-$page = null;
-if(isset($_GET['page'])){
-    $page = $_GET['page'];
-}
 require_once "../Service/OfferPostService.php";
 $offerPostService = new OfferPostService();
-$postPenawaran = $offerPostService->getAllOfferPost($page)?>
+$postPenawaran = $offerPostService->getAllOfferPost()?>
 <html>
 <head>
     <title>
@@ -14,29 +10,21 @@ $postPenawaran = $offerPostService->getAllOfferPost($page)?>
     <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
 </head>
 <body>
+<?php include "navbar.php" ?>
 <div class="container mt-3 border-dark">
     <h1 class="text-center"> Semua Penawaran yang Tersedia</h1>
-    <?php while($postPenawaran):?>
-        <a href="detail.php?id=<?php echo $postPenawaran['id']?>" class="text-decoration-none">
+    <?php foreach($postPenawaran as $penawaran):?>
+        <a href="detail_penawaran.php?id=<?php echo $penawaran['id']?>" class="text-decoration-none">
             <div class="card mb-3">
-                <img src="<?php echo $postPenawaran['foto']?>.jpg" class="card-img-top" alt="Post Image">
+                <img src="<?php echo $penawaran['foto']?>" class="card-img-top" alt="Post Image">
                 <div class="card-body">
-                    <h5 class="card-title"> <?php echo $postPenawaran['judul']?></h5>
-                    <p class="card-text"><small class="text-body-secondary">Created by : <?php echo $postPenawaran['nama_depan'].$postPenawaran['nama_belakang'] ?></small></p>
-                    <p class="card-text"><small class="text-body-secondary">Created at : <?php echo $postPenawaran['dibuat_pada']?></small></p>
+                    <h5 class="card-title"> <?php echo $penawaran['judul']?></h5>
+                    <p class="card-text"><small class="text-body-secondary">Created by : <?php echo $penawaran['nama_depan']." ".$penawaran['nama_belakang'] ?></small></p>
+                    <p class="card-text"><small class="text-body-secondary">Created at : <?php echo $penawaran['dibuat_pada']?></small></p>
                 </div>
             </div>
         </a>
-    <?php endwhile;?>
-    <div class="pagination justify-content-center">
-        <?php if ($page > 0): ?>
-            <a href="?page=<?php echo $page - 1; ?>" class="btn btn-primary m-5">Previous</a>
-        <?php else: ?>
-            <span class="btn btn-secondary m-5">Previous</span>
-        <?php endif; ?>
-
-        <a href="?page=<?php echo $page + 1; ?>" class="btn btn-primary m-5">Next</a>
-    </div>
+    <?php endforeach;?>
 </div>
 </body>
 </html>

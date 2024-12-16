@@ -18,13 +18,10 @@ class OfferPostService
         }
         return [];
     }
-    public function getAllOfferPost($page): ?array
+    public function getAllOfferPost(): ?array
     {
-        $post_per_page = 10;
-        $offset = ($page) * $post_per_page;
-        $query = "SELECT penawaran_donasi.id, penawaran_donasi.judul, penawaran_donasi.foto, penawaran_donasi.dibuat_pada, user.nama_depan, user.nama_belakang FROM penawaran_donasi JOIN user ON penawaran_donasi.nik_pembuat = user.nik LIMIT ? OFFSET ? ";
+        $query = "SELECT penawaran_donasi.id, penawaran_donasi.judul, penawaran_donasi.foto, penawaran_donasi.dibuat_pada, user.nama_depan, user.nama_belakang FROM penawaran_donasi JOIN user ON penawaran_donasi.nik_pembuat = user.nik";
         $statement = $this->db->prepare($query);
-        $statement->bind_param("ii", $post_per_page, $offset);
         $statement->execute();
         $result = $statement->get_result();
         if (!empty($result)) {
@@ -54,5 +51,31 @@ class OfferPostService
             return $statement->insert_id;
         }
         return null;
+    }
+
+    public function getOfferingPostByNik($nik_pembuat): ?array
+    {
+        $query = "SELECT penawaran_donasi.id, penawaran_donasi.judul, penawaran_donasi.foto, penawaran_donasi.dibuat_pada, user.nama_depan, user.nama_belakang FROM penawaran_donasi JOIN user ON penawaran_donasi.nik_pembuat = user.nik WHERE penawaran_donasi.nik_pembuat = ?;";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param("i", $nik_pembuat);
+        $statement->execute();
+        $result = $statement->get_result();
+        if (!empty($result)) {
+            return $result->fetch_all(MYSQLI_ASSOC);
+        }
+        return null;
+    }
+    public function updateOfferingPost($judul, $deskripsi, $id_alamat, $foto, $id): bool
+    {
+        $query = "UPDATE penawaran_donasi  SET judul = ?, deskripsi = ?, id_alamat = ?, foto = ? WHERE id = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param("ssssi", $judul, $deskripsi, $id_alamat, $foto, $id);
+        return $statement->execute();
+    }
+    public function deleteOfferingPost(int $id): bool{
+        $query = "DELETE FROM penawaran_donasi WHERE id = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param("i", $id);
+        return $statement->execute();
     }
 }

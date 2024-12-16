@@ -21,11 +21,9 @@ class RequestPostService
         }
         return [];
     }
-    public function getAllRequestPost($page): ?array
+    public function getAllRequestPost(): ?array
     {
-        $post_per_page = 10;
-        $offset = ($page) * $post_per_page;
-        $query = "SELECT id, judul, foto, dibuat_pada, nik_pembuat FROM permintaan_donasi LIMIT ? OFFSET ?";
+        $query = "SELECT id, judul, foto, dibuat_pada, nik_pembuat FROM permintaan_donasi";
         $statement = $this->db->prepare($query);
         $statement->bind_param("ii", $post_per_page, $offset);
         $statement->execute();
@@ -37,7 +35,7 @@ class RequestPostService
     }
     public function getRequestPostDetailsById(int $id): ?array
     {
-        $query = "SELECT permintaan_donasi.id, permintaan_donasi.judul, permintaan_donasi.deskripsi, permintaan_donasi.dibuat_pada, permintaan_donasi.id_alamat, permintaan_donasi.foto, user.nik_pembuat user.organisasi FROM permintaan_donasi JOIN user ON permintaan_donasi.nik_pembuat = user.nik WHERE id = ?";
+        $query = "SELECT permintaan_donasi.id, permintaan_donasi.judul, permintaan_donasi.deskripsi, permintaan_donasi.dibuat_pada, permintaan_donasi.id_alamat, permintaan_donasi.foto, permintaan_donasi.nik_pembuat, user.organisasi FROM permintaan_donasi JOIN user ON permintaan_donasi.nik_pembuat = user.nik WHERE id = ?";
         $statement = $this->db->prepare($query);
         $statement->bind_param("i", $id);
         $statement->execute();
@@ -62,5 +60,30 @@ class RequestPostService
             return $statement->insert_id;
         }
         return null;
+    }
+    public function getRequestPostByNik($nik_pembuat): ?array
+    {
+        $query = "SELECT permintaan_donasi.id, permintaan_donasi.judul, permintaan_donasi.foto, permintaan_donasi.dibuat_pada, permintaan_donasi.nik_pembuat, user.organisasi FROM permintaan_donasi JOIN user ON permintaan_donasi.nik_pembuat = user.nik WHERE permintaan_donasi.nik_pembuat = ?;";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param("i", $nik_pembuat);
+        $statement->execute();
+        $result = $statement->get_result();
+        if (!empty($result)) {
+            return $result->fetch_all(MYSQLI_ASSOC);
+        }
+        return null;
+    }
+    public function updateRequestPost($judul, $deskripsi, $foto, $id): bool
+    {
+        $query = "UPDATE penawaran_donasi  SET judul = ?, deskripsi = ?, id_alamat = ?, foto = ? WHERE id = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param("ssssi", $judul, $deskripsi, $id_alamat, $foto, $id);
+        return $statement->execute();
+    }
+    public function deleteRequestPost(int $id): bool{
+        $query = "DELETE FROM permintaan_donasi WHERE id = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param("i", $id);
+        return $statement->execute();
     }
 }

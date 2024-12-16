@@ -18,6 +18,7 @@ $alamat = "RT/RW : ".$detail_alamat['rt']."/ ".$detail_alamat['rw'].", ".$detail
     <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
 </head>
 <body>
+<?php include "navbar.php" ?>
 <div class="container mt-5">
     <div class="text-center mt-5">
         <h1>Detail Penawaran</h1>
@@ -26,7 +27,7 @@ $alamat = "RT/RW : ".$detail_alamat['rt']."/ ".$detail_alamat['rw'].", ".$detail
         <img class="card-img-top" src="<?php echo $detail_post_permintaan['foto']?>" alt="Card image cap">
         <div class="card-body">
             <h5 class="card-title"><?php echo $detail_post_permintaan['judul'] ?></h5>
-            <h5><?php echo $detail_user['organisasi']?></h5>
+            <h5><?php echo $detail_post_permintaan['organisasi']?></h5>
             <a href="profile.php?id=<?php echo $detail_user['nik']?>" class="card-text"> <?php echo  $detail_user['nama_depan']." ".$detail_user['nama_belakang']?></a>
             <p class="card-text"><?php echo $detail_post_permintaan['deskripsi']?>.</p>
             <h5> Alamat :</h5>

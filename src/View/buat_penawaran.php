@@ -13,8 +13,8 @@ try {
         if (!isset($_SESSION['nik'])) {
             throw new Exception("Anda belum login. Silakan login terlebih dahulu.");
         }
-        $judul = trim($_POST["judul"]);
-        $deskripsi = trim($_POST["deskripsi"]);
+        $judul = ($_POST["judul"]);
+        $deskripsi = ($_POST["deskripsi"]);
         $nik = $_SESSION['nik'];
         $alamat = $userService->getUserAddressByNik($nik);
         if (!isset($_FILES["file"]) || $_FILES["file"]["error"] != UPLOAD_ERR_OK) {
@@ -27,9 +27,6 @@ try {
         $jenis = $_POST["jenis"] ?? [];
         $ukuran = $_POST["ukuran"] ?? [];
         $jumlah = $_POST["jumlah"] ?? [];
-        if (empty($jenis) || empty($ukuran) || empty($jumlah)) {
-            throw new Exception("Data baju tidak lengkap. Harap isi semua kolom.");
-        }
         $offering_id = $offerPostService->createOfferingPost($judul, $deskripsi, $alamat, $file, $nik);
         if ($offering_id === null) {
             throw new Exception("Gagal membuat postingan. Silakan coba lagi.");
@@ -50,6 +47,7 @@ try {
     <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
 </head>
 <body>
+<?php include "navbar.php" ?>
 <div class="container mt-5 col-md-12">
     <h2 class="text-center">Buat Postingan Penawaran Baju</h2>
     <form method="POST" id="offerForm" class="col-md-12" enctype="multipart/form-data">

@@ -12,6 +12,7 @@ $postPermintaan = $requestPostService->getPostByHighestUpvote();
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
 </head>
 <body>
+<?php include "navbar.php" ?>
 <div class="container mt-3 border-dark">
     <h1 class="text-center"> Penawaran yang Sedang Baru</h1>
     <?php foreach($postPenawaran as $penawaran):?>

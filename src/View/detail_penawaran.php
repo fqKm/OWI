@@ -20,6 +20,7 @@ $alamat = "RT/RW : ".$detail_alamat['rt']."/ ".$detail_alamat['rw'].", ".$detail
     <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
 </head>
 <body>
+<?php include "navbar.php" ?>
 <div class="container mt-5">
     <div class="text-center mt-5">
         <h1>Detail Penawaran</h1>

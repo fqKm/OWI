@@ -7,6 +7,7 @@ $photoService = new PhotoService();
 $requestPostService = new RequestPostService();
 $userService = new UserService();
 $organisasi = $userService->getUserOrganisationByNik($_SESSION['nik']);
+$permintaan = $requestPostService->getRequestPostDetailsById($_GET["id"]);
 try {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!isset($_SESSION['nik'])) {
@@ -19,15 +20,17 @@ try {
         if (empty($judul) || empty($deskripsi)) {
             throw new Exception("Harap lengkapi semua kolom input.");
         }
-        if (!isset($_FILES["file"]) || $_FILES["file"]["error"] != UPLOAD_ERR_OK) {
-            throw new Exception("Gagal mengupload foto. Silakan coba lagi.");
+        $foto = $_FILES["file"] ?? null;
+        if ($foto && $_FILES["file"]["error"] == UPLOAD_ERR_OK) {
+            $file = $photoService->upload($foto, 'permintaan');
+            if ($file === null) {
+                throw new Exception("Gagal menyimpan foto. Silakan coba lagi.");
+            }
+        } else {
+            $file = $permintaan["foto"];
         }
-        $file = $photoService->upload($_FILES["file"], 'permintaan');
-        if ($file === null) {
-            throw new Exception("Gagal menyimpan foto. Silakan coba lagi.");
-        }
-        $offering_id = $requestPostService->createRequestPost($judul, $deskripsi, $alamat, $nik, $file);
-        if ($offering_id === null) {
+        $successUpdateRequest = $requestPostService->updateRequestPost($judul, $deskripsi, $file, $permintaan['id']);
+        if (!$successUpdateRequest) {
             throw new Exception("Gagal membuat postingan. Silakan coba lagi. Harap Lengkapi Organisasi Anda");
         }
         header("Location: home.php");
@@ -52,15 +55,15 @@ try {
         <?php endif;?>
         <div class="col-md-12 mt-3">
             <label for="judul" class="form-label">Judul Permintaan</label>
-            <input type="text" class="form-control" id="judul" name="judul" placeholder="Masukkan judul permintaan" required>
+            <input type="text" class="form-control" id="judul" name="judul" placeholder="Masukkan judul permintaan" value="<?php echo $permintaan['judul']?>" required>
         </div>
         <div class="col-md-12 mt-3">
             <label for="deskripsi" class="form-label">Deskripsi</label>
-            <textarea class="form-control" id="deskripsi" name="deskripsi" rows="4" placeholder="Masukkan deskripsi permintaan"></textarea>
+            <textarea class="form-control" id="deskripsi" name="deskripsi" rows="4" placeholder="Masukkan deskripsi permintaan"><?php echo $permintaan['deskripsi']?></textarea>
         </div>
         <div class="col-md-12 mt-3">
             <label for="file" class="form-label"> Foto </label>
-            <input class="form-control-file" type="file" id="file" name="file" value="">
+            <input class="form-control-file" type="file" id="file" name="file">
         </div>
         <div class="col-md-9 mt-3">
             <label for="organisasi" class="form-label"> Organisasi</label>
