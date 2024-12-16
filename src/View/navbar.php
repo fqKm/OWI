@@ -1,5 +1,5 @@
 <head>
-    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
 </head>
 <nav class="navbar sticky-top navbar navbar-expand-lg navbar-light" style="background-color: #A0CB44">
         <a class="navbar-brand" href="#">OWI</a>

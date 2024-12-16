@@ -22,7 +22,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <html>
 <head>
     <title>Login</title>
-    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
 </head>
 
 <body>
