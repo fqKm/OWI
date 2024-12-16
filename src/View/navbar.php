@@ -10,6 +10,7 @@
             <div class="navbar-nav">
                 <a class="nav-item nav-link active" href="home.php">Home <span class="sr-only">(current)</span></a>
                 <a class="nav-item nav-link" href="postingan_user.php">Postingan Saya</a>
+                <a class="nav-item nav-link" href="riwayat_transaksi.php">Riwayat</a>
                 <a class="nav-item nav-link" href="profile.php">Profile</a>
                 <a class="nav-item nav-link" href="logout.php">Logout</a>
             </div>
