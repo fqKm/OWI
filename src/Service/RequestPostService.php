@@ -23,9 +23,8 @@ class RequestPostService
     }
     public function getAllRequestPost(): ?array
     {
-        $query = "SELECT id, judul, foto, dibuat_pada, nik_pembuat FROM permintaan_donasi";
+        $query = "SELECT permintaan_donasi.id, permintaan_donasi.judul, permintaan_donasi.foto, permintaan_donasi.dibuat_pada, user.nama_depan, user.nama_belakang FROM permintaan_donasi JOIN user ON permintaan_donasi.nik_pembuat = user.nik";
         $statement = $this->db->prepare($query);
-        $statement->bind_param("ii", $post_per_page, $offset);
         $statement->execute();
         $result = $statement->get_result();
         if (!empty($result)) {

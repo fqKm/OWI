@@ -19,4 +19,27 @@ class TransactionService
         }
         return null;
     }
+
+    public function getAllTransaction(): ?array
+    {
+        $query = "SELECT 
+        transaksi.id_transaksi,
+        transaksi.id_postingan,
+        transaksi.waktu_transaksi,
+        transaksi.nomor_resi,
+        transaksi.tipe_transaksi,
+        user.nama_depan AS nama_donatur,
+        user.nama_depan AS nama_penerima
+        FROM transaksi
+        JOIN user ON transaksi.nik_donatur = user.nik";
+        
+        $statement = $this->db->prepare($query);
+        $statement->bind_param("ii", $post_per_page, $offset);
+        $statement->execute();
+        $result = $statement->get_result();
+        if (!empty($result)) {
+            return $result->fetch_all(MYSQLI_ASSOC);
+        }
+        return null;
+    }
 }

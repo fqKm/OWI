@@ -19,7 +19,7 @@ $postPermintaan = $requestPostService->getAllRequestPost()?>
                 <img src="<?php echo $permintaan['foto']?>" class="card-img-top" alt="Post Image">
                 <div class="card-body">
                     <h5 class="card-title"> <?php echo $permintaan['judul']?></h5>
-                    <p class="card-text"><small class="text-body-secondary">Created by : <?php echo $permintaan['nama'] ?></small></p>
+                    <p class="card-text"><small class="text-body-secondary">Created by : <?php echo $permintaan['nama_depan'] ?></small></p>
                     <p class="card-text"><small class="text-body-secondary">Created at : <?php echo $permintaan['dibuat_pada']?></small></p>
                 </div>
             </div>
