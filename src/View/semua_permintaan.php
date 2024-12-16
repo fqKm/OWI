@@ -7,7 +7,7 @@ $postPermintaan = $requestPostService->getAllRequestPost()?>
     <title>
         Semua Permintaan
     </title>
-    <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
 </head>
 <body>
 <?php include "navbar.php" ?>

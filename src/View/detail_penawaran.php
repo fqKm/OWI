@@ -17,7 +17,7 @@ $alamat = "RT/RW : ".$detail_alamat['rt']."/ ".$detail_alamat['rw'].", ".$detail
 <html>
 <head>
     <title> DETAIL <?php echo $detail_post_penawaran['judul']?></title>
-    <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
 </head>
 <body>
 <?php include "navbar.php" ?>

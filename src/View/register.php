@@ -31,8 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 <html>
 <head>
-<title>Regitser</title>
-    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+    <title>Regitser</title>
+    <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
 </head>
 <body>
 <?php include "navbar.php" ?>
