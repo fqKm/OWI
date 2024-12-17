@@ -72,7 +72,7 @@ try {
         </div>
         <div class="mt-3">
             <label for="deskripsi" class="form-label">Deskripsi</label>
-            <textarea class="form-control" id="deskripsi" name="deskripsi" rows="4" placeholder="Masukkan deskripsi penawaran"><?php echo $penawaran['deskripsi']; ?></textarea>
+            <textarea class="form-control" id="deskripsi" name="deskripsi" rows="4" placeholder="Masukkan deskripsi penawaran"><?php echo $penawaran['deskripsi'];?></textarea>
         </div>
         <div class="mt-3">
             <label for="file" class="form-label"> Foto </label>

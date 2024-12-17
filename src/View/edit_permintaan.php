@@ -6,7 +6,6 @@ require_once "../Service/UserService.php";
 $photoService = new PhotoService();
 $requestPostService = new RequestPostService();
 $userService = new UserService();
-$organisasi = $userService->getUserOrganisationByNik($_SESSION['nik']);
 $permintaan = $requestPostService->getRequestPostDetailsById($_GET["id"]);
 try {
 
@@ -16,8 +15,8 @@ try {
         }
         $nik = $_SESSION['nik'];
         $alamat = $userService->getUserAddressByNik($nik);
-        $judul = trim($_POST["judul"] ?? '');
-        $deskripsi = trim($_POST["deskripsi"] ?? '');
+        $judul = trim($_POST["judul"] ?? $permintaan["judul"]);
+        $deskripsi = trim($_POST["deskripsi"] ?? $permintaan["deskripsi"]);
         if (empty($judul) || empty($deskripsi)) {
             throw new Exception("Harap lengkapi semua kolom input.");
         }
@@ -68,10 +67,10 @@ try {
         </div>
         <div class="col-md-9 mt-3">
             <label for="organisasi" class="form-label"> Organisasi</label>
-            <input class="form-control col-md-6" type="text" placeholder="<?php if(empty($organisasi)){
+            <input class="form-control col-md-6" type="text" placeholder="<?php if(empty($permintaan['organisasi'])){
                 echo "Lengkapi Organisasi Anda";
             }else{
-                echo $organisasi['organisasi'];
+                echo $permintaan['organisasi'];
             }?>" name="organisasi" readonly>
         </div>
         <div class="col-md-3 mt-3">

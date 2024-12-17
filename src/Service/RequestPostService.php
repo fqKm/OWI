@@ -10,7 +10,7 @@ class RequestPostService
         $this->db = Database::getInstance()->getConnection();
         $this->userService = new UserService();
     }
-    public function getPostByHighestUpvote(): array
+    public function getPostByLatestUpdate(): array
     {
         $query = "SELECT permintaan_donasi.id, permintaan_donasi.judul, permintaan_donasi.foto, permintaan_donasi.dibuat_pada, permintaan_donasi.nik_pembuat, user.organisasi FROM permintaan_donasi JOIN user ON permintaan_donasi.nik_pembuat = user.nik ORDER BY dibuat_pada DESC LIMIT 5";
         $statement = $this->db->prepare($query);
@@ -34,7 +34,7 @@ class RequestPostService
     }
     public function getRequestPostDetailsById(int $id): ?array
     {
-        $query = "SELECT permintaan_donasi.id, permintaan_donasi.judul, permintaan_donasi.deskripsi, permintaan_donasi.dibuat_pada, permintaan_donasi.id_alamat, permintaan_donasi.foto, permintaan_donasi.nik_pembuat, user.organisasi FROM permintaan_donasi JOIN user ON permintaan_donasi.nik_pembuat = user.nik WHERE id = ?";
+        $query = "SELECT permintaan_donasi.id, permintaan_donasi.judul, permintaan_donasi.deskripsi, permintaan_donasi.dibuat_pada, permintaan_donasi.id_alamat, permintaan_donasi.foto, permintaan_donasi.nik_pembuat, a.jalan, a.rt, a.rw, a.dusun, a.desa, a.kecamatan, a.kota, a.kode_pos, user.nik, user.nama_depan, user.nama_belakang, user.organisasi FROM permintaan_donasi JOIN alamat a ON permintaan_donasi.id_alamat = a.id JOIN user ON permintaan_donasi.nik_pembuat = user.nik WHERE permintaan_donasi.id = ?";
         $statement = $this->db->prepare($query);
         $statement->bind_param("i", $id);
         $statement->execute();

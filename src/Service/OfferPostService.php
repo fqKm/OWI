@@ -7,7 +7,7 @@ class OfferPostService
     {
         $this->db = Database::getInstance()->getConnection();
     }
-    public function getPostByHighestUpvote(): array
+    public function getPostByLatestUpdate(): array
     {
         $query = "SELECT penawaran_donasi.id, penawaran_donasi.judul, penawaran_donasi.foto, penawaran_donasi.dibuat_pada, user.nama_depan, user.nama_belakang FROM penawaran_donasi JOIN user ON penawaran_donasi.nik_pembuat = user.nik ORDER BY dibuat_pada DESC LIMIT 5";
         $statement = $this->db->prepare($query);
@@ -31,7 +31,7 @@ class OfferPostService
     }
     public function getOfferPostDetailsById(int $id): ?array
     {
-        $query = "SELECT id, judul, deskripsi, foto, nik_pembuat, id_alamat, dibuat_pada FROM penawaran_donasi WHERE id = ?;";
+        $query = "SELECT pd.id AS penawaran_id, pd.judul, pd.deskripsi, pd.foto, pd.nik_pembuat,pd.id_alamat, pd.dibuat_pada, a.id as alamat_id, a.jalan, a.rt, a.rw, a.dusun, a.desa, a.kecamatan, a.kota, a.kode_pos,u.nik AS pembuat_nik, u.nama_depan, u.nama_belakang FROM penawaran_donasi pd JOIN alamat a ON pd.id_alamat = a.id JOIN user u ON pd.nik_pembuat = u.nik WHERE pd.id = ?;";
         $statement = $this->db->prepare($query);
         $statement->bind_param("i", $id);
         $statement->execute();

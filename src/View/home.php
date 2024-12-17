@@ -3,8 +3,8 @@ require_once "../Service/OfferPostService.php";
 require_once "../Service/RequestPostService.php";
 $offerPostService = new OfferPostService();
 $requestPostService = new RequestPostService();
-$postPenawaran = $offerPostService->getPostByHighestUpvote();
-$postPermintaan = $requestPostService->getPostByHighestUpvote();
+$postPenawaran = $offerPostService->getPostByLatestUpdate();
+$postPermintaan = $requestPostService->getPostByLatestUpdate();
 ?>
 <html>
 <head>

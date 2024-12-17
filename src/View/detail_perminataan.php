@@ -7,10 +7,7 @@ $requestService = new RequestPostService();
 $userService = new UserService();
 $addressService = new AddressService();
 $detail_post_permintaan = $requestService->getRequestPostDetailsById((int)$_GET["id"]);
-$detail_user = $userService->getUserByNik($detail_post_permintaan["nik_pembuat"]);
-$detail_alamat = $addressService->getAddressById($detail_post_permintaan["id_alamat"]);;
-$alamat = "RT/RW : ".$detail_alamat['rt']."/ ".$detail_alamat['rw'].", ".$detail_alamat['dusun'].", ".$detail_alamat['desa'].", ".$detail_alamat['kecamatan'].", ".$detail_alamat['kota'].", ".$detail_alamat['kode_pos'];
-$postPermintaan = $requestService->getRequestPostDetailsById((int)$_GET["id"]);
+$alamat = "RT/RW : ".$detail_post_permintaan['rt']."/ ".$detail_post_permintaan['rw'].", ".$detail_post_permintaan['dusun'].", ".$detail_post_permintaan['desa'].", ".$detail_post_permintaan['kecamatan'].", ".$detail_post_permintaan['kota'].", ".$detail_post_permintaan['kode_pos'];
 ?>
 
 <html>
@@ -29,10 +26,10 @@ $postPermintaan = $requestService->getRequestPostDetailsById((int)$_GET["id"]);
         <div class="card-body">
             <h5 class="card-title"><?php echo $detail_post_permintaan['judul'] ?></h5>
             <h5><?php echo $detail_post_permintaan['organisasi']?></h5>
-            <a href="profile.php?id=<?php echo $detail_user['nik']?>" class="card-text"> <?php echo  $detail_user['nama_depan']." ".$detail_user['nama_belakang']?></a>
+            <a href="profile.php?id=<?php echo $detail_post_permintaan['nik']?>" class="card-text"> <?php echo  $detail_post_permintaan['nama_depan']." ".$detail_post_permintaan['nama_belakang']?></a>
             <p class="card-text"><?php echo $detail_post_permintaan['deskripsi']?>.</p>
             <h5> Alamat :</h5>
-            <p class="card-text">Jalan : <?php echo  $detail_alamat['jalan'] ?></p>
+            <p class="card-text">Jalan : <?php echo  $detail_post_permintaan['jalan'] ?></p>
             <p class="card-text"> <?php echo $alamat?> </p>
         </div>
         <div class="card-footer text-muted">
@@ -40,7 +37,7 @@ $postPermintaan = $requestService->getRequestPostDetailsById((int)$_GET["id"]);
         </div>
     </div>
     <div class="text-center mt-4">
-        <a href="transaksi_donasi.php?id_posting=<?php echo (Int)$postPermintaan['id']; ?>&nik_penerima=<?php echo (Int)$postPermintaan['nik_pembuat'];?>" class="btn btn-primary">
+        <a href="transaksi_donasi.php?id_posting=<?php echo (Int)$detail_post_permintaan['id']; ?>&nik_penerima=<?php echo (Int)$detail_post_permintaan['nik'];?>" class="btn btn-primary">
             Donasikan baju anda
         </a>
     </div>

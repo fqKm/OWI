@@ -11,37 +11,26 @@ $userService = new UserService();
 $addressService = new AddressService();
 $transactionServive = new TransactionService();
 $detail_post_penawaran = $offerService->getOfferPostDetailsById((int)$_GET["id"]);
-$detail_user = $userService->getUserByNik($detail_post_penawaran["nik_pembuat"]);
-$detail_alamat = $addressService->getAddressById($detail_post_penawaran["id_alamat"]);
 $detail_pakaian = $clothesService->getAllClothes((int)$_GET["id"]);
-$alamat = "RT/RW : ".$detail_alamat['rt']."/ ".$detail_alamat['rw'].", ".$detail_alamat['dusun'].", ".$detail_alamat['desa'].", ".$detail_alamat['kecamatan'].", ".$detail_alamat['kota'].", ".$detail_alamat['kode_pos'];
+$alamat = "RT/RW : ".$detail_post_penawaran['rt']."/ ".$detail_post_penawaran['rw'].", ".$detail_post_penawaran['dusun'].", ".$detail_post_penawaran['desa'].", ".$detail_post_penawaran['kecamatan'].", ".$detail_post_penawaran['kota'].", ".$detail_post_penawaran['kode_pos'];
 try {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Cek apakah session dan variabel yang diperlukan tersedia
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!isset($_SESSION['nik'])) {
-            
-            // Ambil data dari session dan variabel
-            $nik_penerima = $userService->getNikBySession();
-            $id_post = $detail_post_penawaran['id'];
-            $nik_donatur = $detail_post_penawaran['nik_pembuat'];
-            $alamat = $userService->getUserAddressByNik($nik_penerima);
-            $no_resi = str_pad(rand(1000000000000000, 9999999999999999), 16, "0", STR_PAD_LEFT);
-            $tipe_transaksi = "penerimaan";
-    
+            throw new exception("Anda harus login terlebih dahulu");
+        }
+        $nik_penerima = ((int)$_SESSION['nik']);
+        $id_post = $detail_post_penawaran['id'];
+        $nik_donatur = $detail_post_penawaran['nik_pembuat'];
+        $no_resi = str_pad(rand(1000000000000000, 9999999999999999), 16, "0", STR_PAD_LEFT);
+        $tipe_transaksi = "penerimaan";
             // Eksekusi transaksi
-            $transaksi = $transactionServive->createTransaction($id_post, $nik_penerima, $nik_donatur, $no_resi, $tipe_transaksi);
-    
-            if ($transaksi === null) {
-                die("Gagal menginput pakaian. Silakan coba lagi.");
-            }
-    
+         $transaksi = $transactionServive->createTransaction($id_post, $nik_penerima, $nik_donatur, $no_resi, $tipe_transaksi);
+
             // Redirect ke halaman riwayat transaksi
             header("Location: riwayat_transaksi.php");
             exit;
-        } else {
-            die("Data tidak lengkap. Pastikan semua session dan variabel tersedia.");
         }
-    } else {
+    else {
         die("Metode tidak valid.");
     }
 }catch (Exception $e){
@@ -63,10 +52,10 @@ try {
         <img class="card-img-top size" src="<?php echo $detail_post_penawaran['foto']?>" alt="Card image cap">
         <div class="card-body">
             <h5 class="card-title"><?php echo $detail_post_penawaran['judul'] ?></h5>
-            <a href="profile.php?id=<?php echo $detail_user['nik']?>" class="card-text"> <?php echo  $detail_user['nama_depan']." ".$detail_user['nama_belakang']?></a>
+            <a href="profile.php?id=<?php echo $detail_post_penawaran['nik_pembuat']?>" class="card-text"> <?php echo  $detail_post_penawaran['nama_depan']." ".$detail_post_penawaran['nama_belakang']?></a>
             <p class="card-text"><?php echo $detail_post_penawaran['deskripsi']?>.</p>
             <h5> Alamat :</h5>
-            <p class="card-text">Jalan : <?php echo  $detail_alamat['jalan'] ?></p>
+            <p class="card-text">Jalan : <?php echo  $detail_post_penawaran['jalan'] ?></p>
             <p class="card-text"> <?php echo $alamat?> </p>
         </div>
         <div class="card-footer text-muted">
