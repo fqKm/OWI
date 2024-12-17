@@ -20,26 +20,26 @@ class ClothesService
     }
     public function insertAllClothes($id_penawaran, $jenis, $ukuran, $jumlah)
     {
-        $query = "INSERT INTO pakaian (id_penawaran, jenis, ukuran, jumlah) VALUES (?, ?, ?, ?)";
+        $query = "INSERT INTO pakaian (id_penawaran, jenis, ukuran, jumlah, tipe_transaksi) VALUES (?, ?, ?, ?, ?)";
         $statement = $this->db->prepare($query);
         foreach ($jenis as $key => $item) {
             $itemUkuran = $ukuran[$key];
             $itemJumlah = $jumlah[$key];
-
-            $statement->bind_param("issi", $id_penawaran, $item, $itemUkuran, $itemJumlah);
+            $tipe_transaksi = "penawaran";
+            $statement->bind_param("issis", $id_penawaran, $item, $itemUkuran, $itemJumlah, $tipe_transaksi);
             return $statement->execute();
         }
         return false;
     }
     public function insertClothesDonasi($id_transaksi, $jenis, $ukuran, $jumlah)
     {
-        $query = "INSERT INTO pakaian (id_transaksi, jenis, ukuran, jumlah) VALUES (?, ?, ?, ?)";
+        $query = "INSERT INTO pakaian (id_transaksi, jenis, ukuran, jumlah, tipe_transaksi) VALUES (?, ?, ?, ?, ?)";
         $statement = $this->db->prepare($query);
         foreach ($jenis as $key => $item) {
             $itemUkuran = $ukuran[$key];
             $itemJumlah = $jumlah[$key];
-
-            $statement->bind_param("issi", $id_transaksi, $item, $itemUkuran, $itemJumlah);
+            $tipe_transaksi = "donasi";
+            $statement->bind_param("issis", $id_transaksi, $item, $itemUkuran, $itemJumlah, $tipe_transaksi);
             return $statement->execute();
         }
         return false;
