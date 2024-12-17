@@ -9,6 +9,7 @@ $userService = new UserService();
 $organisasi = $userService->getUserOrganisationByNik($_SESSION['nik']);
 $permintaan = $requestPostService->getRequestPostDetailsById($_GET["id"]);
 try {
+
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!isset($_SESSION['nik'])) {
             throw new Exception("Anda belum login. Silakan login terlebih dahulu.");

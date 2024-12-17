@@ -90,5 +90,31 @@ class UserService {
         }
         return null;
     }
+
+    public function getUserInfoByNik($nik): array
+    {
+        $query = "SELECT * FROM user LEFT JOIN alamat ON user.id_alamat = alamat.id WHERE user.nik = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param('i', $nik);
+        $statement->execute();
+        $result = $statement->get_result();
+        if (!empty($result)) {
+            return $result->fetch_assoc();
+        }
+        return [];
+    }
+
+    public function updateUserInfo($nik,$nama_depan,$nama_belakang,$email,$nomor_telepon,$organisasi):? array
+    {
+        $query = "UPDATE user SET nama_depan = ?, nama_belakang = ?, email=?, nomor_telepon=?,organisasi=? WHERE nik=?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param('sssssi', $nama_depan, $nama_belakang, $email, $nomor_telepon, $organisasi, $nik);
+        $statement ->execute();
+        $result = $statement->get_result();
+        if (!empty($result)) {
+            return $result->fetch_assoc();
+        }
+        return [];
+    }
 }
 ?>
