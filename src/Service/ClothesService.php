@@ -26,7 +26,20 @@ class ClothesService
             $itemUkuran = $ukuran[$key];
             $itemJumlah = $jumlah[$key];
 
-            $statement->bind_param("issi", $id_penawaran, $item, $jenis[$key], $jumlah[$key]);
+            $statement->bind_param("issi", $id_penawaran, $item, $itemUkuran, $itemJumlah);
+            return $statement->execute();
+        }
+        return false;
+    }
+    public function insertClothesDonasi($id_transaksi, $jenis, $ukuran, $jumlah)
+    {
+        $query = "INSERT INTO pakaian (id_transaksi, jenis, ukuran, jumlah) VALUES (?, ?, ?, ?)";
+        $statement = $this->db->prepare($query);
+        foreach ($jenis as $key => $item) {
+            $itemUkuran = $ukuran[$key];
+            $itemJumlah = $jumlah[$key];
+
+            $statement->bind_param("issi", $id_transaksi, $item, $itemUkuran, $itemJumlah);
             return $statement->execute();
         }
         return false;
