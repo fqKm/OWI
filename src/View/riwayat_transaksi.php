@@ -3,20 +3,9 @@ require_once "../Service/TransactionService.php";
 require_once "../Service/UserService.php";
 $transactionService = new TransactionService();
 $userService = new UserService();
-$donasi = $transactionService->getDonateTransaction();
-$penerimaan = $transactionService->getRequestTransaction();
-
-try{
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        if (!isset($_SESSION['nik'])) {
-            throw new Exception("Anda belum login. Silakan login terlebih dahulu.");
-        }
-        $nik = $_SESSION['nik'];
-
-    }
-} catch (Exception $e) {
-    $error = $e->getMessage();
-}
+$nik = $userService->getNikBySession();
+$penerimaan = $transactionService->getRequestTransaction($nik);
+$donasi = $transactionService->getDonateTransaction($nik);
 ?>
 
 <html>
