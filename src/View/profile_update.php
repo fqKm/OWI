@@ -44,7 +44,7 @@ try {
 
         // Update alamat
         $successUpdateAlamat = $addressService->updateAddressById($id_alamat, $rt, $rw, $jalan, $dusun, $desa, $kecamatan, $kota, $kode_pos);
-
+        header("Location: profile.php");
         if ($successUpdateInfo && $successUpdateAlamat) {
             $success = "Profil berhasil diperbarui.";
             // Refresh data
@@ -148,7 +148,7 @@ try {
             <input type="hidden" name="id_alamat" value="<?php echo htmlspecialchars($data['id_alamat']); ?>">
 
             <div class="text-center">
-                <button type="submit" name="submit" class="btn btn-primary">Save Changes</button>
+                <button type="submit" name="submit" class="btn btn-primary" >Save Changes</button>
                 <a href="profile.php" class="btn btn-secondary">Cancel</a>
             </div>
         </div>
