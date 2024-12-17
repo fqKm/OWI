@@ -81,5 +81,14 @@ class UserService {
         }
         return [];
     }
+
+    public function getNikBySession(): ?int
+    {
+        session_start();
+        if (isset($_SESSION['nik'])) {
+            return $_SESSION['nik'];
+        }
+        return null;
+    }
 }
 ?>

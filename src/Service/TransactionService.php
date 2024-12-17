@@ -20,7 +20,7 @@ class TransactionService
         return null;
     }
 
-    public function getDonateTransaction(): ?array
+    public function getDonateTransaction(int $nik): ?array
     {
         $query = "SELECT 
         transaksi.id_transaksi,
@@ -42,7 +42,7 @@ class TransactionService
         return null;
     }
 
-    public function getRequestTransaction(): ?array
+    public function getRequestTransaction(int $nik): ?array
     {
         $query = "SELECT 
         transaksi.id_transaksi,
