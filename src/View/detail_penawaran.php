@@ -16,25 +16,33 @@ $detail_alamat = $addressService->getAddressById($detail_post_penawaran["id_alam
 $detail_pakaian = $clothesService->getAllClothes((int)$_GET["id"]);
 $alamat = "RT/RW : ".$detail_alamat['rt']."/ ".$detail_alamat['rw'].", ".$detail_alamat['dusun'].", ".$detail_alamat['desa'].", ".$detail_alamat['kecamatan'].", ".$detail_alamat['kota'].", ".$detail_alamat['kode_pos'];
 try {
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Cek apakah session dan variabel yang diperlukan tersedia
         if (!isset($_SESSION['nik'])) {
-            throw new Exception("Anda belum login. Silakan login terlebih dahulu.");
+            
+            // Ambil data dari session dan variabel
+            $nik_penerima = $userService->getNikBySession();
+            $id_post = $detail_post_penawaran['id'];
+            $nik_donatur = $detail_post_penawaran['nik_pembuat'];
+            $alamat = $userService->getUserAddressByNik($nik_penerima);
+            $no_resi = str_pad(rand(1000000000000000, 9999999999999999), 16, "0", STR_PAD_LEFT);
+            $tipe_transaksi = "penerimaan";
+    
+            // Eksekusi transaksi
+            $transaksi = $transactionServive->createTransaction($id_post, $nik_penerima, $nik_donatur, $no_resi, $tipe_transaksi);
+    
+            if ($transaksi === null) {
+                die("Gagal menginput pakaian. Silakan coba lagi.");
+            }
+    
+            // Redirect ke halaman riwayat transaksi
+            header("Location: riwayat_transaksi.php");
+            exit;
+        } else {
+            die("Data tidak lengkap. Pastikan semua session dan variabel tersedia.");
         }
-        $nik_penerima = $_SESSION['nik'];
-        $id_post = $detail_post_penawaran['id'];
-        $nik_donatur = $detail_post_penawaran["nik_pembuat"];
-        $alamat = $userService->getUserAddressByNik($nik_penerima);
-        $no_resi = str_pad(rand(1000000000000000, 9999999999999999), 16, "0", STR_PAD_LEFT);
-        $tipe_transaksi = "penerimaan";
-        $transaksi = $transactionServive->createTransaction($id_post, $nik_penerima, $nik_donatur, $no_resi, $tipe_transaksi);
-        if ($transaksi === null) {
-            throw new Exception("Gagal menginput pakaian. Silakan coba lagi.");
-        }
-        if (!$transactionServive->createTransaction($id_post, $nik_penerima, $nik_donatur, $no_resi, $tipe_transaksi)) {
-            throw new Exception("Gagal menginput pakaian. Silakan coba lagi.");
-        }
-        header("Location: riwayat_transaksi.php");
-        exit;
+    } else {
+        die("Metode tidak valid.");
     }
 }catch (Exception $e){
     $error = $e->getMessage();
