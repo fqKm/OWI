@@ -11,40 +11,31 @@ $userService = new UserService();
 $clothesService = new ClothesService();
 $transactionServive = new TransactionService();
 $requestPostService = new RequestPostService();
-try {
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        if (!isset($_SESSION['nik'])) {
-            throw new Exception("Anda belum login. Silakan login terlebih dahulu.");
-        }
-        $nik_donatur = $_SESSION['nik'];
-        $id_post = $_GET["id_posting"];
-        $nik_penerima = $_GET["nik_penerima"];
-        $alamat = $userService->getUserAddressByNik($nik_donatur);
-        $no_resi = str_pad(rand(1000000000000000, 9999999999999999), 16, "0", STR_PAD_LEFT);
-        $tipe_transaksi = "donasi";
-        if (!isset($_FILES["file"]) || $_FILES["file"]["error"] != UPLOAD_ERR_OK) {
-            throw new Exception("Gagal mengupload foto. Silakan coba lagi.");
-        }
-        $file = $photoService->upload($_FILES["file"], 'donasi');
-        if ($file === null) {
-            throw new Exception("Gagal menyimpan foto. Silakan coba lagi.");
-        }
-        $jenis = $_POST["jenis"] ?? [];
-        $ukuran = $_POST["ukuran"] ?? [];
-        $jumlah = $_POST["jumlah"] ?? [];
-        $transaksi = $transactionServive->createTransaction($id_post, $nik_penerima, $nik_donatur, $no_resi, $tipe_transaksi);
-        if ($transaksi === null) {
-            throw new Exception("Gagal menginput pakaian. Silakan coba lagi.");
-        }
-        if (!$transactionServive->createTransaction($id_post, $nik_penerima, $nik_donatur, $no_resi, $tipe_transaksi)) {
-            throw new Exception("Gagal menginput pakaian. Silakan coba lagi.");
-        }
-        header("Location: riwayat_transaksi.php");
-        exit;
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (!isset($_SESSION['nik'])) {
+        throw new Exception("Anda belum login. Silakan login terlebih dahulu.");
     }
-}catch (Exception $e){
-        $error = $e->getMessage();
-}?>
+    $nik_donatur = $_SESSION['nik'];
+    $id_post = $_GET["id_posting"];
+    $nik_penerima = $_GET["nik_penerima"];
+    $alamat = $userService->getUserAddressByNik($nik_donatur);
+    $no_resi = str_pad(rand(1000000000000000, 9999999999999999), 16, "0", STR_PAD_LEFT);
+    $tipe_transaksi = "donasi";
+    $jenis = $_POST["jenis"] ?? [];
+    $ukuran = $_POST["ukuran"] ?? [];
+    $jumlah = $_POST["jumlah"] ?? [];
+    $transaksi = $transactionServive->createTransaction($id_post, $nik_penerima, $nik_donatur, $no_resi, $tipe_transaksi);
+    if ($transaksi === null) {
+        throw new Exception("Gagal menginput pakaian. Silakan coba lagi.");
+    }
+    if (!$clothesService->insertClothesDonasi($transaksi, $jenis, $ukuran, $jumlah)) {
+        throw new Exception("Gagal memasukkan daftar pakaian. Silakan coba lagi.");
+    }
+    header("Location: riwayat_transaksi.php");
+    exit;
+    }
+    
+?>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -59,10 +50,6 @@ try {
         <?php if(isset($error)):?>
             <div class="alert alert-danger mt-3 text-center col-md-12"><?php echo $error?></div>
         <?php endif;?>
-        <div class="mt-3">
-            <label for="file" class="form-label"> Foto </label>
-            <input class="form-control-file" type="file" id="file" name="file">
-        </div>
         <div id="clothesList" class="mt-5">
             <h5>Daftar Baju</h5>
             <div class="clothes-item mb-3">
