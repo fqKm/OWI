@@ -2,8 +2,8 @@
 session_start();
 require_once "../Service/UserService.php";
 
-$nik = $_SESSION['nik']; 
-$userService= new UserService();
+$nik = $_GET['nik_user']; 
+$userService = new UserService();
 $data= $userService->getUserInfoByNik($nik);
 ?>
 <!DOCTYPE html>
@@ -77,10 +77,6 @@ $data= $userService->getUserInfoByNik($nik);
         </div>
     </div>
 
-
-    <div class="text-center mt-4">
-        <a href="profile_update.php" class="btn btn-success">Edit Profile</a>
-    </div>
 </div>
 </body>
 </html>

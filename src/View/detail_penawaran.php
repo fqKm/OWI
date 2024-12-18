@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <img class="card-img-top size" src="<?php echo $detail_post_penawaran['foto']?>" alt="Card image cap">
         <div class="card-body">
             <h5 class="card-title"><?php echo $detail_post_penawaran['judul'] ?></h5>
-            <a href="profile.php?id=<?php echo $detail_user['nik']?>" class="card-text"> <?php echo  $detail_user['nama_depan']." ".$detail_user['nama_belakang']?></a>
+            <a href="profile2.php?nik_user=<?php echo (Int)$detail_post_penawaran['nik_pembuat']?>" class="card-text"> <?php echo  $detail_user['nama_depan']." ".$detail_user['nama_belakang']?></a>
             <p class="card-text"><?php echo $detail_post_penawaran['deskripsi']?>.</p>
             <h5> Alamat :</h5>
             <p class="card-text">Jalan : <?php echo  $detail_alamat['jalan'] ?></p>
