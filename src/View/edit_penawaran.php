@@ -36,7 +36,7 @@ try {
         if (empty($jenis) || empty($ukuran) || empty($jumlah)) {
             throw new Exception("Data baju tidak lengkap. Harap isi semua kolom.");
         }
-        $successUpdatePost =$offerPostService->updateOfferingPost($penawaran['id'], $judul, $deskripsi, $alamat, $file);
+        $successUpdatePost =$offerPostService->updateOfferingPost($judul, $deskripsi, $alamat, $file, $penawaran['id']);
         if (!$successUpdatePost) {
             throw new Exception("Gagal memperbarui postingan. Silakan coba lagi.");
         }
@@ -68,7 +68,7 @@ try {
         <?php endif;?>
         <div class="mt-3">
             <label for="judul" class="form-label">Judul Penawaran</label>
-            <input type="text" class="form-control" id="judul" name="judul" placeholder="Masukkan judul penawaran" value="<?php echo $penawaran['judul']; ?>" required>
+            <input type="text" class="form-control" id="judul" name="judul" placeholder="<?php echo $penawaran['judul']; ?>" required>
         </div>
         <div class="mt-3">
             <label for="deskripsi" class="form-label">Deskripsi</label>

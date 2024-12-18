@@ -74,9 +74,9 @@ class RequestPostService
     }
     public function updateRequestPost($judul, $deskripsi, $foto, $id): bool
     {
-        $query = "UPDATE penawaran_donasi  SET judul = ?, deskripsi = ?, id_alamat = ?, foto = ? WHERE id = ?";
+        $query = "UPDATE permintaan_donasi  SET judul = ?, deskripsi = ?, foto = ? WHERE id = ?";
         $statement = $this->db->prepare($query);
-        $statement->bind_param("ssssi", $judul, $deskripsi, $id_alamat, $foto, $id);
+        $statement->bind_param("sssi", $judul, $deskripsi, $foto, $id);
         return $statement->execute();
     }
     public function deleteRequestPost(int $id): bool{
