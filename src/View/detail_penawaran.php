@@ -12,7 +12,7 @@ $addressService = new AddressService();
 $transactionServive = new TransactionService();
 $detail_post_penawaran = $offerService->getOfferPostDetailsById((int)$_GET["id"]);
 $detail_user = $userService->getUserByNik($detail_post_penawaran["nik_pembuat"]);
-$detail_alamat = $addressService->getAddressById($detail_post_penawaran["id_alamat"]);
+$detail_alamat = $addressService->getAddressById($detail_user["id_alamat"]);
 $detail_pakaian = $clothesService->getAllClothes((int)$_GET["id"]);
 $alamat = "RT/RW : ".$detail_alamat['rt']."/ ".$detail_alamat['rw'].", ".$detail_alamat['dusun'].", ".$detail_alamat['desa'].", ".$detail_alamat['kecamatan'].", ".$detail_alamat['kota'].", ".$detail_alamat['kode_pos'];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
