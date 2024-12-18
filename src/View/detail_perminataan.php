@@ -8,7 +8,7 @@ $userService = new UserService();
 $addressService = new AddressService();
 $detail_post_permintaan = $requestService->getRequestPostDetailsById((int)$_GET["id"]);
 $detail_user = $userService->getUserByNik($detail_post_permintaan["nik_pembuat"]);
-$detail_alamat = $addressService->getAddressById($detail_post_permintaan["id_alamat"]);;
+$detail_alamat = $addressService->getAddressById($detail_user["id_alamat"]);;
 $alamat = "RT/RW : ".$detail_alamat['rt']."/ ".$detail_alamat['rw'].", ".$detail_alamat['dusun'].", ".$detail_alamat['desa'].", ".$detail_alamat['kecamatan'].", ".$detail_alamat['kota'].", ".$detail_alamat['kode_pos'];
 $postPermintaan = $requestService->getRequestPostDetailsById((int)$_GET["id"]);
 ?>
@@ -29,7 +29,7 @@ $postPermintaan = $requestService->getRequestPostDetailsById((int)$_GET["id"]);
         <div class="card-body">
             <h5 class="card-title"><?php echo $detail_post_permintaan['judul'] ?></h5>
             <h5><?php echo $detail_post_permintaan['organisasi']?></h5>
-            <a href="profile.php?id=<?php echo $detail_user['nik']?>" class="card-text"> <?php echo  $detail_user['nama_depan']." ".$detail_user['nama_belakang']?></a>
+            <a href="profile2.php?nik_user=<?php echo $detail_user['nik']?>" class="card-text"> <?php echo  $detail_user['nama_depan']." ".$detail_user['nama_belakang']?></a>
             <p class="card-text"><?php echo $detail_post_permintaan['deskripsi']?>.</p>
             <h5> Alamat :</h5>
             <p class="card-text">Jalan : <?php echo  $detail_alamat['jalan'] ?></p>
